@@ -7,5 +7,11 @@ GET {{baseURL}}/home/hello
 GET {{baseURL}}/home/status
 
 # @name ControllerAutomatico
-
+###
 GET {{baseURL}}/conceitos-automatico/home
+
+###
+GET {{baseURL}}/conceitos-automatico/outro
+
+###
+GET {{baseURL}}/conceitos-automatico/conceito
