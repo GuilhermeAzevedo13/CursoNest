@@ -5,3 +5,7 @@ GET {{baseURL}}/home/hello
 
 ###
 GET {{baseURL}}/home/status
+
+# @name ControllerAutomatico
+
+GET {{baseURL}}/conceitos-automatico/home
