@@ -1,0 +1,7 @@
+@baseURL = http://localhost:3000
+
+### Rotas de API
+GET {{baseURL}}/home/hello
+
+###
+GET {{baseURL}}/home/status
