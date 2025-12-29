@@ -21,3 +21,13 @@ GET {{baseURL}}/recados
 
 ###
 GET {{baseURL}}/recados/1
+
+###
+POST {{baseURL}}/recados
+Content-Type: application/json
+
+{
+    "recado": "Este é o recado enviado.",
+    "nova chave": "Outro Valor"
+}
+###
