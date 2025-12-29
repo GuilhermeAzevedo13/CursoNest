@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -50,5 +51,10 @@ export class RecadosController {
       id,
       ...body,
     };
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `Essa rota apaga o ID .: ${id}`;
   }
 }

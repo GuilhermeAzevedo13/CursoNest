@@ -39,3 +39,7 @@ Content-Type: application/json
     "recado": "Este é o recado enviado.",
     "nova chave": "Outro Valor"
 }
+
+###
+
+DELETE {{baseURL}}/recados/1
