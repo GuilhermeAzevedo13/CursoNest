@@ -17,27 +17,30 @@ GET {{baseURL}}/conceitos-automatico/outro
 GET {{baseURL}}/conceitos-automatico/conceito
 
 ###
-GET {{baseURL}}/recados?limit=1?offset=1
+GET {{baseURL}}/recados
 
 ###
-GET {{baseURL}}/recados/1
+GET {{baseURL}}/recados/2
 
 ###
 POST {{baseURL}}/recados
 Content-Type: application/json
 
 {
-    "recado": "Este é o recado enviado.",
-    "nova chave": "Outro Valor"
-}
+    "texto": "Novo Recado de teste",
+    "de": "jonas",
+    "para": "joao",
+    "lido": false,
+    "data": "2025-12-30T12:51:31.553Z"
+  }
 ###
 
-PATCH {{baseURL}}/recados/1
+PATCH {{baseURL}}/recados/2
 Content-Type: application/json
 
 {
-    "recado": "Este é o recado enviado.",
-    "nova chave": "Outro Valor"
+    "texto": "Este é o recado atualizado.",
+    "de": "gui"
 }
 
 ###

@@ -6,3 +6,5 @@ export class CreateRecadosDto {
   //lido: boolean;
   //data: Date;
 }
+
+// dto Criar recado eh o q preciso para criar um novo recado na entidade.
