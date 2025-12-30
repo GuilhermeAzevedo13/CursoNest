@@ -11,6 +11,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
+import { CreateRecadosDto } from './dto/create-recados.dto';
+import { UpdateRecadosDto } from './dto/update-recados.dto';
 
 // CRUD
 // Create -> POST -> Criar um recado
@@ -22,40 +24,38 @@ import { RecadosService } from './recados.service';
 // PATCH é utilizado para atualizar dados de um recurso
 // PUT é utilizado para atualizar um recurso inteiro
 
+// DTO - Data Transfer Object -> Objeto de transferência de dados
+// DTO -> Objeto simples -> Validar dados / Transformar dados
+
 @Controller('recados')
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   // Encontrar todos os recados
   @HttpCode(HttpStatus.OK)
   @Get()
-  getfindAll(@Query() pagination: any) {
+  findAll(@Query() pagination: any) {
     const { limit = 10, offset = 0 } = pagination;
-    return this.recadosService.getfindAll(limit, offset);
+    return this.recadosService.findAll();
   }
 
   //Econtrar um recado passando um parametro
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log(id);
-    return `Essa rota retorna apenas um recado passando um parametro com ID ${id}`;
+    return this.recadosService.findOne(id);
   }
 
   @Post()
-  create(@Body() body: any) {
-    console.log(body);
-    return `Essa rota cria um recado`;
+  create(@Body() createRecadosDto: CreateRecadosDto) {
+    return this.recadosService.create(createRecadosDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
-    return {
-      id,
-      ...body,
-    };
+  update(@Param('id') id: string, @Body() UpdateRecadosDto: UpdateRecadosDto) {
+    return this.recadosService.update(id, UpdateRecadosDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Essa rota apaga o ID .: ${id}`;
+    this.recadosService.remove(id);
   }
 }
