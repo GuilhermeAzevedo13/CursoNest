@@ -27,9 +27,9 @@ POST {{baseURL}}/recados
 Content-Type: application/json
 
 {
-    "texto": "Novo Recado de teste",
+    "texto": "olo pessoal 2",
     "de": "jonas",
-    "para": "joao",
+    "para": "gui",
     "lido": false,
     "data": "2025-12-30T12:51:31.553Z"
   }
