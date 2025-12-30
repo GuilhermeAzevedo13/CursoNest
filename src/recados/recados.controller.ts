@@ -8,7 +8,7 @@ import {
   Param,
   Patch,
   Post,
-  Put,
+  Query,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 
@@ -28,8 +28,9 @@ export class RecadosController {
   // Encontrar todos os recados
   @HttpCode(HttpStatus.OK)
   @Get()
-  getfindAll(): string {
-    return this.recadosService.getfindAll();
+  getfindAll(@Query() pagination: any) {
+    const { limit = 10, offset = 0 } = pagination;
+    return this.recadosService.getfindAll(limit, offset);
   }
 
   //Econtrar um recado passando um parametro

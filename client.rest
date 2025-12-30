@@ -17,7 +17,7 @@ GET {{baseURL}}/conceitos-automatico/outro
 GET {{baseURL}}/conceitos-automatico/conceito
 
 ###
-GET {{baseURL}}/recados
+GET {{baseURL}}/recados?limit=1?offset=1
 
 ###
 GET {{baseURL}}/recados/1
