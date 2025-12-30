@@ -26,8 +26,6 @@ export class CreateRecadosDto {
   @MinLength(3)
   @MaxLength(12)
   readonly para: string;
-  //lido: boolean;
-  //data: Date;
 }
 
 // dto Criar recado eh o q preciso para criar um novo recado na entidade.
