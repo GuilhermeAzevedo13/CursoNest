@@ -8,6 +8,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true, // Remove coisas q nao ta no DTO
       forbidNonWhitelisted: true, //Levanta o erro quando algo nao deveria existir dentro do body do json
+      transform: false, //tenta Converter os tipos primitivos (string, number, boolean) para o tipo esperado no DTO
     }),
   );
   await app.listen(process.env.PORT ?? 3000);

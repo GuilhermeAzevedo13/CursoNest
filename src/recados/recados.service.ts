@@ -59,6 +59,7 @@ export class RecadosService {
       ...recadoExistente,
       ...UpdateRecadosDto,
     };
+    return this.recados[recadoExistenteIndex];
   }
 
   remove(id: string) {
