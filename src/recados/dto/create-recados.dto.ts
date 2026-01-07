@@ -1,10 +1,4 @@
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateRecadosDto {
   //id: number; //Nao preciso disso pois eh gerado pela base de dadoos.
@@ -12,19 +6,18 @@ export class CreateRecadosDto {
   @IsNotEmpty()
   @MinLength(1)
   @MaxLength(255)
-  @IsOptional()
   readonly texto: string;
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(12)
+  @MinLength(2)
+  @MaxLength(50)
   readonly de: string;
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(12)
+  @MinLength(2)
+  @MaxLength(50)
   readonly para: string;
 }
 
