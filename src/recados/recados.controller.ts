@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -33,15 +34,15 @@ export class RecadosController {
   // Encontrar todos os recados
   @HttpCode(HttpStatus.OK)
   @Get()
-  findAll(@Query() pagination: any) {
-    const { limit = 10, offset = 0 } = pagination;
-    return this.recadosService.findAll();
+  async findAll(@Query('page') page: number = 1) {
+    // page vem da URL: GET /recados?page=2
+    return this.recadosService.findAll(Number(page) || 1, 10);
   }
 
   //Econtrar um recado passando um parametro
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.recadosService.findOne(id);
+    return this.recadosService.findOne(+id);
   }
 
   @Post()
@@ -50,12 +51,15 @@ export class RecadosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() UpdateRecadosDto: UpdateRecadosDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateRecadosDto: UpdateRecadosDto,
+  ) {
     return this.recadosService.update(id, UpdateRecadosDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    this.recadosService.remove(id);
+  remove(@Param('id') id: number) {
+    return this.recadosService.remove(id);
   }
 }

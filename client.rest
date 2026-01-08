@@ -20,7 +20,7 @@ GET {{baseURL}}/conceitos-automatico/conceito
 GET {{baseURL}}/recados
 
 ###
-GET {{baseURL}}/recados/1
+GET {{baseURL}}/recados/5
 
 ###
 POST {{baseURL}}/recados
@@ -33,13 +33,14 @@ Content-Type: application/json
 }
 ###
 
-PATCH {{baseURL}}/recados/1
+PATCH {{baseURL}}/recados/5
 Content-Type: application/json
 
 {
-  "texto": "aaaaa"
+  "texto": "opa opa eh",
+  "lido": true
 }
 
 ###
 
-DELETE {{baseURL}}/recados/1
+DELETE {{baseURL}}/recados/2

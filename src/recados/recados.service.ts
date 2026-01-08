@@ -12,25 +12,24 @@ export class RecadosService {
     private readonly recadoRepository: Repository<RecadoEntity>,
   ) {}
 
-  private lastId = 1;
-  private recados: RecadoEntity[] = [
-    {
-      id: 1,
-      texto: 'Este eh o recado inicial',
-      de: 'Joao',
-      para: 'jose',
-      lido: false,
-      data: new Date(),
-    },
-  ];
-
   throwNotFoundError() {
     throw new NotFoundException('Recado nao encontrado');
   }
 
-  async findAll() {
-    const recados = await this.recadoRepository.find(); // Esse find retorna uma promise prometendo retornar todos os recados.
-    return recados;
+  async findAll(page: number = 1, pageSize: number = 10) {
+    const [items, total] = await this.recadoRepository.findAndCount({
+      order: { id: 'ASC' }, // opcional, mas recomendado
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+
+    return {
+      data: items,
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 
   async findOne(id: number) {
@@ -45,48 +44,40 @@ export class RecadosService {
     this.throwNotFoundError();
   }
 
-  create(CreateRecadosDto: CreateRecadosDto) {
-    this.lastId++;
-    const id = this.lastId;
+  async create(CreateRecadosDto: CreateRecadosDto) {
     const novoRecado = {
-      id,
       ...CreateRecadosDto,
       lido: false,
       data: new Date(),
     };
-    this.recados.push(novoRecado);
 
-    return novoRecado;
+    const recado = this.recadoRepository.create(novoRecado); // O create retorna uma promise prometendo salvar o recado no banco de dados.
+
+    return this.recadoRepository.save(recado); // O save retorna uma promise prometendo retornar o recado salvo.
   }
 
-  update(id: string, UpdateRecadosDto: UpdateRecadosDto) {
-    const recadoExistenteIndex = this.recados.findIndex(
-      (item) => item.id === +id,
-    );
-    if (recadoExistenteIndex < 0) {
-      this.throwNotFoundError();
-    }
-    const recadoExistente = this.recados[recadoExistenteIndex];
-    this.recados[recadoExistenteIndex] = {
-      ...recadoExistente,
-      ...UpdateRecadosDto,
+  async update(id: number, UpdateRecadosDto: UpdateRecadosDto) {
+    const partialUpdateRecadoDTO = {
+      lido: UpdateRecadosDto.lido,
+      texto: UpdateRecadosDto.texto,
     };
-    return this.recados[recadoExistenteIndex];
-  }
-
-  remove(id: string) {
-    const recadoExistenteIndex = this.recados.findIndex(
-      (item) => item.id === +id,
-    );
-
-    if (recadoExistenteIndex < 0) {
+    const recado = await this.recadoRepository.preload({
+      id: id,
+      ...partialUpdateRecadoDTO,
+    });
+    if (!recado) {
       this.throwNotFoundError();
     }
+    return this.recadoRepository.save(recado!);
+  }
 
-    const recado = this.recados[recadoExistenteIndex];
-
-    this.recados.splice(recadoExistenteIndex, 1);
-
-    return recado;
+  async remove(id: number) {
+    const recado = await this.recadoRepository.findOneBy({
+      id,
+    });
+    if (!recado) {
+      this.throwNotFoundError();
+    }
+    return this.recadoRepository.remove(recado!);
   }
 }
