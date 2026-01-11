@@ -44,3 +44,33 @@ Content-Type: application/json
 ###
 
 DELETE {{baseURL}}/recados/2
+
+
+#Pessoas
+### Listar todas as pessoas
+GET {{baseURL}}/pessoas?page=1
+
+### Listar uma pessoa pelo ID
+GET {{baseURL}}/pessoas/1
+
+### Criar uma nova pessoa
+POST {{baseURL}}/pessoas
+Content-Type: application/json 
+
+{
+  "name": "Usuario Teste {{$randomInt 100 999}}",
+  "email": "usuario{{$timestamp}}@teste.com",
+  "passwordHash": "Senh@123"
+}
+
+### Atualizar uma pessoa pelo ID
+PATCH {{baseURL}}/pessoas/3
+Content-Type: application/json
+{
+  "name": "Usuario Teste {{$randomInt 100 999}}",
+  "email": "usuario{{$timestamp}}@teste.com",
+  "passwordHash": "NovaSenha@123"
+}
+
+### Deletar uma pessoa pelo ID
+DELETE {{baseURL}}/pessoas/4

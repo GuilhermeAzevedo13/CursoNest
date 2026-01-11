@@ -1,16 +1,18 @@
-import { IsEmail, IsNotEmpty, IsStrongPassword } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePessoaDto {
   @IsEmail()
   readonly email: string;
 
-  @IsStrongPassword({
-    minLength: 8,
-    minNumbers: 1,
-    minSymbols: 1,
-  })
+  // @IsStrongPassword({
+  //   minLength: 8,
+  //   minNumbers: 1,
+  //   minSymbols: 1,
+  // })
   @IsNotEmpty()
-  readonly password: string;
+  readonly passwordHash: string;
 
+  @IsNotEmpty()
+  @IsString()
   readonly name: string;
 }

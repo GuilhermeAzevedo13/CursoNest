@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsPositive,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateRecadosDto {
   //id: number; //Nao preciso disso pois eh gerado pela base de dadoos.
@@ -8,17 +14,11 @@ export class CreateRecadosDto {
   @MaxLength(255)
   readonly texto: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(50)
-  readonly de: string;
+  @IsPositive()
+  deId: number;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(50)
-  readonly para: string;
+  @IsPositive()
+  paraId: number;
 }
 
 // dto Criar recado eh o q preciso para criar um novo recado na entidade.

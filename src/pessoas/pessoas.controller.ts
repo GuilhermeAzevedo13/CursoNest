@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PessoasService } from './pessoas.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
@@ -21,8 +22,8 @@ export class PessoasController {
   }
 
   @Get()
-  findAll() {
-    return this.pessoasService.findAll();
+  findAll(@Query('page') page: number = 1) {
+    return this.pessoasService.findAll(Number(page) || 1, 10);
   }
 
   @Get(':id')

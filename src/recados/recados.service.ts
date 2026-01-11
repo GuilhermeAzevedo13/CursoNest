@@ -4,12 +4,14 @@ import { RecadoEntity } from './entities/recado.entity';
 import { UpdateRecadosDto } from './dto/update-recados.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PessoasService } from 'src/pessoas/pessoas.service';
 
 @Injectable()
 export class RecadosService {
   constructor(
     @InjectRepository(RecadoEntity)
     private readonly recadoRepository: Repository<RecadoEntity>,
+    private readonly pessoasService: PessoasService,
   ) {}
 
   throwNotFoundError() {
@@ -18,9 +20,20 @@ export class RecadosService {
 
   async findAll(page: number = 1, pageSize: number = 10) {
     const [items, total] = await this.recadoRepository.findAndCount({
-      order: { id: 'ASC' }, // opcional, mas recomendado
+      order: { id: 'ASC' },
       skip: (page - 1) * pageSize,
       take: pageSize,
+      relations: ['de', 'para'],
+      select: {
+        de: {
+          id: true,
+          name: true,
+        },
+        para: {
+          id: true,
+          name: true,
+        },
+      },
     });
 
     return {
@@ -45,15 +58,13 @@ export class RecadosService {
   }
 
   async create(CreateRecadosDto: CreateRecadosDto) {
+    // Encontrar a pessoa que está criando o recado
+    // Encontrar a pessoa para quem o recado está sendo enviado
     const novoRecado = {
       ...CreateRecadosDto,
       lido: false,
       data: new Date(),
     };
-
-    const recado = this.recadoRepository.create(novoRecado); // O create retorna uma promise prometendo salvar o recado no banco de dados.
-
-    return this.recadoRepository.save(recado); // O save retorna uma promise prometendo retornar o recado salvo.
   }
 
   async update(id: number, UpdateRecadosDto: UpdateRecadosDto) {
