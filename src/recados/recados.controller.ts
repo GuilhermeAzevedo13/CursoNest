@@ -14,6 +14,7 @@ import {
 import { RecadosService } from './recados.service';
 import { CreateRecadosDto } from './dto/create-recados.dto';
 import { UpdateRecadosDto } from './dto/update-recados.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 // CRUD
 // Create -> POST -> Criar um recado
@@ -34,9 +35,10 @@ export class RecadosController {
   // Encontrar todos os recados
   @HttpCode(HttpStatus.OK)
   @Get()
-  async findAll(@Query('page') page: number = 1) {
-    // page vem da URL: GET /recados?page=2
-    return this.recadosService.findAll(Number(page) || 1, 10);
+  async findAll(@Query() PaginationDto: PaginationDto) {
+    // Captura todos os query parameters: GET /recados?page=2&pageSize=5
+
+    return this.recadosService.findAll(PaginationDto);
   }
 
   //Econtrar um recado passando um parametro
