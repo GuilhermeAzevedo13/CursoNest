@@ -20,7 +20,7 @@ GET {{baseURL}}/conceitos-automatico/conceito
 GET {{baseURL}}/recados
 
 ###
-GET {{baseURL}}/recados/5
+GET {{baseURL}}/recados/1
 
 ###
 POST {{baseURL}}/recados
